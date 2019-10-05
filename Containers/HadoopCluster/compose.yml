@@ -1,0 +1,64 @@
+version: "3"
+services:
+  basenode:
+    build:
+      context: ./BaseNode
+      dockerfile: Dockerfile
+    image: hadoopbasenode:0.1-ra
+  masternode:
+    image: hadoopbasenode:0.1-ra
+    depends_on:
+      - basenode
+    ports:
+      - "8020:8020"
+      - "50070:50070"
+      - "50090:50090"
+    volumes:
+      - ./volumes/masternode/nn:/nn
+      - ./volumes/masternode/snn:/snn
+    command: start_service.sh namenode
+    container_name: masternode
+  workernode1:
+    image: hadoopbasenode:0.1-ra
+    depends_on:
+      - masternode
+    ports:
+      - "50075:50075"
+      - "50010:50010"
+      - "50020:50020"
+    volumes:
+      - ./volumes/workernode1/dn:/dn
+    command: start_service.sh datanode
+    container_name: workernode1
+  workernode2:
+    image: hadoopbasenode:0.1-ra
+    depends_on:
+      - masternode
+    ports:
+      - "50076:50075"
+      - "50011:50010"
+      - "50021:50020"
+    volumes:
+      - ./volumes/workernode2/dn:/dn
+    command: start_service.sh datanode
+    container_name: workernode2
+  workernode3:
+    image: hadoopbasenode:0.1-ra
+    depends_on:
+      - masternode
+    ports:
+      - "50077:50075"
+      - "50012:50010"
+      - "50022:50020"
+    volumes:
+      - ./volumes/workernode3/dn:/dn
+    command: start_service.sh datanode
+    container_name: workernode3
+  hadoopclient:
+    image: hadoopbasenode:0.1-ra
+    depends_on:
+      - masternode
+    volumes:
+      - ./volumes/shared:/shared
+    command: /sbin/init
+    container_name: hadoopclient
