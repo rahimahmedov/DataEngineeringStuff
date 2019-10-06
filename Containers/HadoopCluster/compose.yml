@@ -66,10 +66,25 @@ services:
     command: start_worker.sh
     container_name: workernode3
   hadoopclient:
-    image: hadoopbasenode:0.1-ra
+    build:
+      context: ./ClientNode
+      dockerfile: Dockerfile
+    image: hadoopclientnode:0.1-ra
     depends_on:
       - masternode
     volumes:
       - ./volumes/shared:/shared
     command: /sbin/init
     container_name: hadoopclient
+  mysqldb:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    volumes:
+      - ./volumes/dbstore:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    container_name: mysqldb
