@@ -11,8 +11,15 @@ VOLUME /nn /snn /dn /yarn /shared
 RUN mkdir -p /etc/hadoop/conf
 COPY core-site.xml /etc/hadoop/conf
 COPY hdfs-site.xml /etc/hadoop/conf
-COPY start_service.sh /usr/bin/
-RUN chmod +x /usr/bin/start_service.sh
+COPY yarn-site.xml /etc/hadoop/conf
+COPY start_hdfs.sh /usr/bin/
+RUN chmod +x /usr/bin/start_hdfs.sh
+COPY start_yarn.sh /usr/bin/
+RUN chmod +x /usr/bin/start_yarn.sh
+COPY start_master.sh /usr/bin/
+RUN chmod +x /usr/bin/start_master.sh
+COPY start_worker.sh /usr/bin/
+RUN chmod +x /usr/bin/start_worker.sh
 ENV HADOOP_CONF_DIR /etc/hadoop/conf
 ENV HADOOP_HOME $HADOOP_HOME/hadoop-3.2.1
 ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin

@@ -13,10 +13,15 @@ services:
       - "8020:8020"
       - "50070:50070"
       - "50090:50090"
+      - "8032:8032"
+      - "8030:8030"
+      - "8088:8088"
+      - "8031:8031"
+      - "8033:8033"
     volumes:
       - ./volumes/masternode/nn:/nn
       - ./volumes/masternode/snn:/snn
-    command: start_service.sh namenode
+    command: start_master.sh
     container_name: masternode
   workernode1:
     image: hadoopbasenode:0.1-ra
@@ -26,9 +31,11 @@ services:
       - "50075:50075"
       - "50010:50010"
       - "50020:50020"
+      - "8042:8042"
     volumes:
       - ./volumes/workernode1/dn:/dn
-    command: start_service.sh datanode
+      - ./volumes/workernode1/yarn:/yarn
+    command: start_worker.sh
     container_name: workernode1
   workernode2:
     image: hadoopbasenode:0.1-ra
@@ -38,9 +45,11 @@ services:
       - "50076:50075"
       - "50011:50010"
       - "50021:50020"
+      - "8043:8042"
     volumes:
       - ./volumes/workernode2/dn:/dn
-    command: start_service.sh datanode
+      - ./volumes/workernode2/yarn:/yarn
+    command: start_worker.sh
     container_name: workernode2
   workernode3:
     image: hadoopbasenode:0.1-ra
@@ -50,9 +59,11 @@ services:
       - "50077:50075"
       - "50012:50010"
       - "50022:50020"
+      - "8044:8042"
     volumes:
       - ./volumes/workernode3/dn:/dn
-    command: start_service.sh datanode
+      - ./volumes/workernode3/yarn:/yarn
+    command: start_worker.sh
     container_name: workernode3
   hadoopclient:
     image: hadoopbasenode:0.1-ra

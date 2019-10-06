@@ -15,13 +15,9 @@ then
 fi
 
 echo " >>>> Starting $1 service .... >>>>"
-rm -f /tmp/*.pid
-
-if [ $1 == namenode ]
+rm -f /tmp/hadoop-root-$1.pid
+if ! [ -f /nn/current/VERSION ] && [ $1 == namenode ]
 then
-    if ! [ -f /nn/current/VERSION ]
-    then
-        hdfs namenode -format -force
-    fi
+    hdfs namenode -format -force
 fi
-hdfs $1
+hdfs --daemon start $1
