@@ -1,6 +1,6 @@
 FROM hadoopbasenode:0.1-ra
 WORKDIR /root
-RUN yum  -y --nogpg install mysql mysql-connector-java java-1.8.0-openjdk-devel which
+RUN yum  -y --nogpg install mysql java-1.8.0-openjdk-devel which
 RUN wget https://www-eu.apache.org/dist/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz
 RUN wget https://repo1.maven.org/maven2/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
 RUN mkdir -p /opt/sqoop  \
@@ -14,5 +14,5 @@ ENV HADOOP_YARN_HOME=$HADOOP_HOME
 ENV SQOOP_HOME=/opt/sqoop/sqoop-1.4.7.bin__hadoop-2.6.0
 ENV PATH=$PATH:$SQOOP_HOME/bin
 RUN mv /root/commons-lang-2.6.jar /$SQOOP_HOME/lib/
-RUN ln -s /usr/share/java/mysql-connector-java.jar $SQOOP_HOME/lib/mysql-connector-java.jar
+COPY mysql-connector-java-8.0.17.jar $SQOOP_HOME/lib/
 
