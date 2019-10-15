@@ -1,4 +1,5 @@
 FROM centos:latest
+MAINTAINER Rahim Ahmedov  <rahim.ahmedov@gmail.com>
 WORKDIR /root
 ARG HADOOP_HOME=/opt/hadoop
 RUN yum -y --nogpg install java-1.8.0-openjdk wget tar zip \
