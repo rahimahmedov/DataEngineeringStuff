@@ -88,3 +88,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: admin
     container_name: mysqldb
+  sparknode:
+    build:
+      context: ./SparkNode
+      dockerfile: Dockerfile
+    image: sparkclientnode:0.1-ra
+    depends_on:
+      - masternode
+    volumes:
+      - ./volumes/shared:/shared
+    command: /sbin/init
+    container_name: sparknode
