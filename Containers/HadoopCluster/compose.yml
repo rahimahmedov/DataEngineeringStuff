@@ -95,6 +95,8 @@ services:
     image: sparkclientnode:0.1-ra
     depends_on:
       - masternode
+    ports:
+      - "18080:18080"
     volumes:
       - ./volumes/shared:/shared
     command: /sbin/init
