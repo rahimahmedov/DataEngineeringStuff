@@ -94,9 +94,8 @@ services:
       dockerfile: Dockerfile
     image: sparkclientnode:0.1-ra
     depends_on:
-      - masternode
-    ports:
-      - "18080:18080"
+      - hadoopclient
+      - mysqldb
     volumes:
       - ./volumes/shared:/shared
     command: /sbin/init
